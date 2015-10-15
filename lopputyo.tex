@@ -138,33 +138,11 @@ Merkitään nyt
 		\end{bmatrix},
 \end{equation*}
 jolloin yhtälö \ref{matriiseilla} saadaan seuraavaan muotoon, josta voidaan helposti ratkaista $\matr{\beta}$.~\cite{wolframmath}
-\begin{alignat*}{2}
-	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \\
-	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \\
+\begin{alignat}{2}
+	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
+	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
 	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
-\end{alignat*}
-
-
-%	\matr{E} =
-%		\begin{bmatrix}
-%			e_1 \\
-%			e_2 \\
-%			\vdots \\
-%			e_n
-%		\end{bmatrix}
-%\end{equation}
-%Virheet minimoituvat, kun näille matriiseille pätee
-%\begin{equation} \label{matriisit}
-%	\matr{Y} = \matr{X}\matr{\beta}.
-%\end{equation}
-%Tästä voidaan edelleen ratkaista $\matr{\beta}$, josta saadaan parhaiten dataan sopivan käyrän funktion kertoimet kertomalla ensin vasemmalta matriisin $\matr{X}$ transpoosilla $\transpose{\matr{X}}$, jolloin yhtälö \ref{matriisit} saadaan muotoon
-%\begin{equation*}
-%	\transpose{\matr{X}}\matr{Y} = \transpose{\matr{X}}\matr{X}\matr{\beta}.
-%\end{equation*}
-%Mikäli matriisi $\transpose{\matr{X}}\matr{X}\matr{\beta}$ on kääntyvä, voidaan nyt kertoa vasemmalta tämän matriisin käänteismatriisilla, jolloin saadaan ratkaistuksi kertoimet sisältävälle vektorille $\matr{\beta}$ yhtälössä \ref{beta} esitetty lauseke.~\cite{wolframmath}
-%\begin{equation}\label{beta}
-%	\matr{\beta} = (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y}
-%\end{equation}
+\end{alignat}
 
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
