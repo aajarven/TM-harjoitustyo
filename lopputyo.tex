@@ -25,7 +25,9 @@
 % asettaa nyk. kappaleen nimen vasempaan ylänurkkaan, saa poistaa jos haluaa
 \lhead{\leftmark}
 
-\newcommand{\matr}[1]{\mathbf{#1}}
+\usepackage{bm}
+\newcommand{\matr}[1]{\bm{#1}}
+\newcommand{\transpose}[1]{{#1}^T}
 
 %%%%% kaikki ennen tätä liittyy käytettäviin paketteihin tai dokumentin muotoiluun. siihen ei tarvinne aluksi koskea. %%%%%
 
@@ -40,27 +42,133 @@ Anni Järvenpää
 
 %%%%%%%%%%%%%%% Oleellinen sisältö alkaa%%%%%%%%%%%%%%%
 \section{Lineaarinen pienimmän neliösumman menetelmä}
-Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa pisteistä $(x_i, y_i)$ koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. Tyypillisesti sovituksen hyvyyttä mitataan pisteiden vertikaalisena etäisyytenä sovitetusta suorasta (merkitty sinisellä kuvassa \ref{vertikaalietaisyys}). Pienimmän neliösumman menetelmässä näiden vertikaalisten poikkeamien neliöiden summa pyritään minimoimaan, siis etsimään funktion $f(x) = kx+b$ kertoimet $k$ ja $b$ siten, että virhe $S$ on mahdollisimman pieni, kun $S$ on määritelty seuraavasti:
-\begin{equation}
-	S=\sum\limits_{i=1}^{n} (y_i - f(x_i))^2
+Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa $n$ muotoa $(x_i, y_i)$ olevasta pisteestä koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. Tyypillisesti sovituksen hyvyyttä mitataan pisteiden vertikaalisena etäi\-syytenä~$|e|$ sovitetusta suorasta (merkitty sinisellä kuvassa \ref{vertikaalietaisyys}). Pienimmän neliösumman menetelmässä näiden vertikaalisten poikkeamien neliöiden summa pyritään minimoimaan, siis etsimään funktion $f(x) = \beta_1 + \beta_2 x + \beta_3 x^2 + ... + \beta_{m+1} x^m$ kertoimet $\beta_1 ... \beta_{m+1}$ siten, että virhe $S$ on mahdollisimman pieni, kun $S$ on määritelty yhtälön \ref{virhe} mukaisesti.~\cite{basicideas}
+\begin{equation} \label{virhe}
+	S = \sum\limits_{i=1}^{n} e_i^2 = \sum\limits_{i=1}^{n} (y_i - f(x_i))^2
 \end{equation}
 
 \begin{figure}
 \centering
-\includegraphics{vertikaalietaisyys.eps} %lveydeksi voi antaa myös vaikkapa 5cm tai muun konkreettisen mitan tai vaihtoehtoisesti asettaa leveydeksi vaikapa 80% tekstin leveydestä parametrilla 0.8\textwidth. Kuvan korjeuden voi asettaa esimerkiksi height=6cm.
+\includegraphics{vertikaalietaisyys.eps}
 \caption{Pistejoukko, johon sovitettu suora mustalla ja pisteiden vertikaaliset etäisyydet suorasta pisteinä.}
 \label{vertikaalietaisyys}
 \end{figure}
 
-Mikäli havaintopisteitä on vain kaksi tai pisteet ovat täsmälleen suoralla, voidaan 
+Virheen minimiarvot löytyvät derivaatan nollakohdista:
+\begin{align*}
+	\frac{\partial R^2}{\partial \beta_1} &= -2\sum\limits_{i=1}^n[y-(\beta_1+\beta_2x+...+\beta_{m+1}x^m)]=0 \\
+	\frac{\partial R^2}{\partial \beta_2} &= -2\sum\limits_{i=1}^n[y-(\beta_1+\beta_2x+...+\beta_{m+1}x^m)]=0 \\
+	&\vdots  \\
+	\frac{\partial R^2}{\partial \beta_{m+1}} &= -2\sum\limits_{i=1}^n[y-(\beta_1+\beta_2x+...+\beta_{m+1}x^m)]=0
+\end{align*}
+Näistä saadaan edelleen 
+\begin{align*}
+	\beta_1 n+\beta_2\sum\limits_{i=1}^n x_i+...+\beta_{m+1} \sum\limits_{i=1}^n x_i^m &= \sum\limits_{i=1}^n y_i \\
+	\beta_1\sum\limits_{i=1}^nx_i+\beta_1\sum\limits_{i=1}^nx_i^2+...+\beta_{m+1}\sum\limits_{i=1}^nx_i^{m+1} &= \sum\limits_{i=1}^n x_iy_i  \\
+	\beta_1\sum\limits_{i=1}^nx_i^{m}+\beta_1\sum\limits_{i=1}^nx_i^{m+1}+...+\beta_{m+1}\sum\limits_{i=1}^nx_i^{2m} &= \sum\limits_{i=1}^n x_i^{m}y_i
+\end{align*}
+eli matriisimuodossa
+\begin{equation*}
+	\begin{bmatrix}
+		n & \sum\limits_{n=1}^{n} x_i & ... & \sum\limits_{n=1}^{n} x_i^{m} \\
+		\sum\limits_{n=1}^{n} x_i & \sum\limits_{n=1}^{n} x_i^2 & ... & \sum\limits_{n=1}^{n} x_i^{m+1} \\
+		\vdots & \vdots & \ddots  & \vdots \\
+		\sum\limits_{n=1}^{n} x_i^{m} & \sum\limits_{n=1}^{n} x_i^{m+1} & ... & \sum\limits_{n=1}^{n} x_i^{2m}
+	\end{bmatrix}
+	\begin{bmatrix}
+		\beta_1 \\
+		\beta_2 \\
+		\vdots \\
+		\beta_{m} \\
+		\beta_{m+1} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\sum\limits_{i=1}^n y_1 \\
+		\sum\limits_{i=1}^n y_2 \\
+		\vdots \\
+		\sum\limits_{i=1}^n y_{m} \\
+	\end{bmatrix}
+\end{equation*}
+Tämä voidaan edelleen kirjoittaa~\cite{wolframmath}
+\begin{equation} \label{matriiseilla}
+	\begin{bmatrix}
+		x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
+		x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
+	\end{bmatrix}
+	\begin{bmatrix}
+		\beta_1 \\
+		\beta_2 \\
+		\vdots \\
+		\beta_{m+1} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		y_1 \\
+		y_2 \\
+		\vdots \\
+		y_n
+	\end{bmatrix}
+\end{equation}
 
-%Matriisimuodossa tämä voidaan kirjoittaa
-%\begin{equation}
-%	\matr{Y} = \matr{\Phi}\matr{\Theta} + \matr{E},
+Merkitään nyt
+\begin{equation*}
+	\matr{Y} =
+		\begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			\vdots \\
+			y_n
+		\end{bmatrix},\qquad
+	\matr{X} = 
+		\begin{bmatrix}
+			x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
+			x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
+			\vdots  & \vdots  & \ddots & \vdots  \\
+			x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
+		\end{bmatrix} \quad \text{ja} \quad
+	\matr{\beta} =
+		\begin{bmatrix}
+			\beta_1 \\
+			\beta_2 \\
+			\vdots \\
+			\beta_m			
+		\end{bmatrix},
+\end{equation*}
+jolloin yhtälö \ref{matriiseilla} saadaan seuraavaan muotoon, josta voidaan helposti ratkaista $\matr{\beta}$.~\cite{wolframmath}
+\begin{alignat*}{2}
+	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \\
+	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \\
+	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
+\end{alignat*}
+
+
+%	\matr{E} =
+%		\begin{bmatrix}
+%			e_1 \\
+%			e_2 \\
+%			\vdots \\
+%			e_n
+%		\end{bmatrix}
 %\end{equation}
-%missä $\matr{Y}$ ja $\matr{E}$ ovat $n$ mittaisia vektoreita, $\matr{\Theta}$ on $p$ mittainen vektori, missä $p$ on vapaiden parametrien määrä, ja $\matr{\Phi}$ on ($n \times p$) matriisi. 
+%Virheet minimoituvat, kun näille matriiseille pätee
+%\begin{equation} \label{matriisit}
+%	\matr{Y} = \matr{X}\matr{\beta}.
+%\end{equation}
+%Tästä voidaan edelleen ratkaista $\matr{\beta}$, josta saadaan parhaiten dataan sopivan käyrän funktion kertoimet kertomalla ensin vasemmalta matriisin $\matr{X}$ transpoosilla $\transpose{\matr{X}}$, jolloin yhtälö \ref{matriisit} saadaan muotoon
+%\begin{equation*}
+%	\transpose{\matr{X}}\matr{Y} = \transpose{\matr{X}}\matr{X}\matr{\beta}.
+%\end{equation*}
+%Mikäli matriisi $\transpose{\matr{X}}\matr{X}\matr{\beta}$ on kääntyvä, voidaan nyt kertoa vasemmalta tämän matriisin käänteismatriisilla, jolloin saadaan ratkaistuksi kertoimet sisältävälle vektorille $\matr{\beta}$ yhtälössä \ref{beta} esitetty lauseke.~\cite{wolframmath}
+%\begin{equation}\label{beta}
+%	\matr{\beta} = (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y}
+%\end{equation}
+
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
+\newpage
 \bibliographystyle{plain}
 \bibliography{lahteet} 
 \appendix
