@@ -4,3 +4,7 @@
 *.synctex.gz
 *.toc
 *eps-converted-to.pdf
+*.bbl
+*.blg
+*~
+*.swp
