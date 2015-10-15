@@ -25,6 +25,8 @@
 % asettaa nyk. kappaleen nimen vasempaan ylänurkkaan, saa poistaa jos haluaa
 \lhead{\leftmark}
 
+\newcommand{\matr}[1]{\mathbf{#1}}
+
 %%%%% kaikki ennen tätä liittyy käytettäviin paketteihin tai dokumentin muotoiluun. siihen ei tarvinne aluksi koskea. %%%%%
 
 %%%%% kansilehti %%%%%
@@ -38,8 +40,25 @@ Anni Järvenpää
 
 %%%%%%%%%%%%%%% Oleellinen sisältö alkaa%%%%%%%%%%%%%%%
 \section{Lineaarinen pienimmän neliösumman menetelmä}
-Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa pisteistä $(x_i, y_i)$ koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. 
+Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa pisteistä $(x_i, y_i)$ koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. Tyypillisesti sovituksen hyvyyttä mitataan pisteiden vertikaalisena etäisyytenä sovitetusta suorasta (merkitty sinisellä kuvassa \ref{vertikaalietaisyys}). Pienimmän neliösumman menetelmässä näiden vertikaalisten poikkeamien neliöiden summa pyritään minimoimaan, siis etsimään funktion $f(x) = kx+b$ kertoimet $k$ ja $b$ siten, että virhe $S$ on mahdollisimman pieni, kun $S$ on määritelty seuraavasti:
+\begin{equation}
+	S=\sum\limits_{i=1}^{n} (y_i - f(x_i))^2
+\end{equation}
 
+\begin{figure}
+\centering
+\includegraphics{vertikaalietaisyys.eps} %lveydeksi voi antaa myös vaikkapa 5cm tai muun konkreettisen mitan tai vaihtoehtoisesti asettaa leveydeksi vaikapa 80% tekstin leveydestä parametrilla 0.8\textwidth. Kuvan korjeuden voi asettaa esimerkiksi height=6cm.
+\caption{Pistejoukko, johon sovitettu suora mustalla ja pisteiden vertikaaliset etäisyydet suorasta pisteinä.}
+\label{vertikaalietaisyys}
+\end{figure}
+
+Mikäli havaintopisteitä on vain kaksi tai pisteet ovat täsmälleen suoralla, voidaan 
+
+%Matriisimuodossa tämä voidaan kirjoittaa
+%\begin{equation}
+%	\matr{Y} = \matr{\Phi}\matr{\Theta} + \matr{E},
+%\end{equation}
+%missä $\matr{Y}$ ja $\matr{E}$ ovat $n$ mittaisia vektoreita, $\matr{\Theta}$ on $p$ mittainen vektori, missä $p$ on vapaiden parametrien määrä, ja $\matr{\Phi}$ on ($n \times p$) matriisi. 
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
 \bibliographystyle{plain}
