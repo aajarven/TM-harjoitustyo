@@ -68,7 +68,7 @@ Näistä saadaan edelleen
 	\beta_1\sum\limits_{i=1}^nx_i^{m}+\beta_1\sum\limits_{i=1}^nx_i^{m+1}+...+\beta_{m+1}\sum\limits_{i=1}^nx_i^{2m} &= \sum\limits_{i=1}^n x_i^{m}y_i
 \end{align*}
 eli matriisimuodossa
-\begin{equation*}
+\begin{equation*} \label{matriisimuoto}
 	\begin{bmatrix}
 		n & \sum\limits_{n=1}^{n} x_i & ... & \sum\limits_{n=1}^{n} x_i^{m} \\
 		\sum\limits_{n=1}^{n} x_i & \sum\limits_{n=1}^{n} x_i^2 & ... & \sum\limits_{n=1}^{n} x_i^{m+1} \\
@@ -90,13 +90,51 @@ eli matriisimuodossa
 		\sum\limits_{i=1}^n y_{m} \\
 	\end{bmatrix}
 \end{equation*}
-Tämä voidaan edelleen kirjoittaa~\cite{wolframmath}
+
+%Tämä voidaan edelleen kirjoittaa~\cite{wolframmath}
+
+%Merkitään nyt
+%\begin{equation*}
+%	\matr{Y} =
+%		\begin{bmatrix}
+%			y_1 \\
+%			y_2 \\
+%			\vdots \\
+%			y_n
+%		\end{bmatrix},\qquad
+%	\matr{X} = 
+%		\begin{bmatrix}
+%			x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
+%			x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
+%			\vdots  & \vdots  & \ddots & \vdots  \\
+%			x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
+%		\end{bmatrix} \quad \text{ja} \quad
+%	\matr{\beta} =
+%		\begin{bmatrix}
+%			\beta_1 \\
+%			\beta_2 \\
+%			\vdots \\
+%			\beta_m			
+%		\end{bmatrix},
+%\end{equation*}
+
+Voidaan myös huomata, että yhtälöön \ref{matriisimuoto} voidaan päästä hyödyntämällä Vandermonden matriisia \cite{vandermonde}
+\begin{equation}
+	\matr{V} = 
+	\begin{bmatrix}
+		1 & x_{1}^2 & ...    & x_{1}^n \\
+		1 & x_{2}^2 & ...    & x_{2}^n \\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		1 & x_{m}^2 &    ... & x_{m}^n
+	\end{bmatrix}
+\end{equation}
+ja kirjoittamalla tämän avulla
 \begin{equation} \label{matriiseilla}
 	\begin{bmatrix}
-		x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
-		x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
+		1 & x_{1}^2 & ...    & x_{1}^n \\
+		1 & x_{2}^2 & ...    & x_{2}^n \\
 		\vdots  & \vdots  & \ddots & \vdots  \\
-		x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
+		1 & x_{m}^2 &    ... & x_{m}^n
 	\end{bmatrix}
 	\begin{bmatrix}
 		\beta_1 \\
@@ -110,39 +148,49 @@ Tämä voidaan edelleen kirjoittaa~\cite{wolframmath}
 		y_2 \\
 		\vdots \\
 		y_n
+	\end{bmatrix}.
+\end{equation}
+Nyt voidaan kertoa edellinen yhtälö puolittain vasemmalta Vandermonden matriisin transpoosilla $\transpose{\matr{V}}$, jolloin yhtälö saadaan seuraavaan muotoon:
+\begin{equation} 
+	\begin{bmatrix}
+		1       & 1       & ...    & 1 \\
+		x_{1}^2 & x_{2}^2 & ...    &  x_{m}^2\\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		x_{1}^n & x_{2}^n &    ... & x_{m}^n
+	\end{bmatrix}
+	\begin{bmatrix}
+		1 & x_{1}^2 & ...    & x_{1}^n \\
+		1 & x_{2}^2 & ...    & x_{2}^n \\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		1 & x_{m}^2 &    ... & x_{m}^n
+	\end{bmatrix}
+	\begin{bmatrix}
+		\beta_1 \\
+		\beta_2 \\
+		\vdots \\
+		\beta_{m+1} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		1       & 1       & ...    & 1 \\
+		x_{1}^2 & x_{2}^2 & ...    &  x_{m}^2\\
+		\vdots  & \vdots  & \ddots & \vdots  \\
+		x_{1}^n & x_{2}^n &    ... & x_{m}^n
+	\end{bmatrix}
+	\begin{bmatrix}
+		y_1 \\
+		y_2 \\
+		\vdots \\
+		y_n
 	\end{bmatrix}
 \end{equation}
 
-Merkitään nyt
-\begin{equation*}
-	\matr{Y} =
-		\begin{bmatrix}
-			y_1 \\
-			y_2 \\
-			\vdots \\
-			y_n
-		\end{bmatrix},\qquad
-	\matr{X} = 
-		\begin{bmatrix}
-			x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
-			x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
-			\vdots  & \vdots  & \ddots & \vdots  \\
-			x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
-		\end{bmatrix} \quad \text{ja} \quad
-	\matr{\beta} =
-		\begin{bmatrix}
-			\beta_1 \\
-			\beta_2 \\
-			\vdots \\
-			\beta_m			
-		\end{bmatrix},
-\end{equation*}
-jolloin yhtälö \ref{matriiseilla} saadaan seuraavaan muotoon, josta voidaan helposti ratkaista $\matr{\beta}$.~\cite{wolframmath}
-\begin{alignat}{2}
-	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
-	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
-	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
-\end{alignat}
+%jolloin yhtälö \ref{matriiseilla} saadaan seuraavaan muotoon, josta voidaan helposti ratkaista $\matr{\beta}$.~\cite{wolframmath}
+%\begin{alignat}{2}
+%	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
+%	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
+%	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
+%\end{alignat}
 
 
 
