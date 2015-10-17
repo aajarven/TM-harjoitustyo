@@ -54,7 +54,7 @@ Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa $n$ muot
 \label{vertikaalietaisyys}
 \end{figure}
 
-Virheen minimiarvot löytyvät derivaatan nollakohdista:
+Virheen minimiarvot löytyvät derivaatan nollakohdista:~\cite{wolframmath}
 \begin{align*}
 	\frac{\partial R^2}{\partial \beta_1} &= -2\sum\limits_{i=1}^n[y-(\beta_1+\beta_2x+...+\beta_{m+1}x^m)]=0 \\
 	\frac{\partial R^2}{\partial \beta_2} &= -2\sum\limits_{i=1}^n[y-(\beta_1+\beta_2x+...+\beta_{m+1}x^m)]=0 \\
@@ -68,12 +68,12 @@ Näistä saadaan edelleen
 	\beta_1\sum\limits_{i=1}^nx_i^{m}+\beta_1\sum\limits_{i=1}^nx_i^{m+1}+...+\beta_{m+1}\sum\limits_{i=1}^nx_i^{2m} &= \sum\limits_{i=1}^n x_i^{m}y_i
 \end{align*}
 eli matriisimuodossa
-\begin{equation*} \label{matriisimuoto}
+\begin{equation} \label{matriisimuoto}
 	\begin{bmatrix}
-		n & \sum\limits_{n=1}^{n} x_i & ... & \sum\limits_{n=1}^{n} x_i^{m} \\
-		\sum\limits_{n=1}^{n} x_i & \sum\limits_{n=1}^{n} x_i^2 & ... & \sum\limits_{n=1}^{n} x_i^{m+1} \\
+		n & \sum\limits_{i=1}^{n} x_i & ... & \sum\limits_{i=1}^{n} x_i^{m} \\
+		\sum\limits_{i=1}^{n} x_i & \sum\limits_{i=1}^{n} x_i^2 & ... & \sum\limits_{i=1}^{n} x_i^{m+1} \\
 		\vdots & \vdots & \ddots  & \vdots \\
-		\sum\limits_{n=1}^{n} x_i^{m} & \sum\limits_{n=1}^{n} x_i^{m+1} & ... & \sum\limits_{n=1}^{n} x_i^{2m}
+		\sum\limits_{i=1}^{n} x_i^{m} & \sum\limits_{i=1}^{n} x_i^{m+1} & ... & \sum\limits_{i=1}^{n} x_i^{2m}
 	\end{bmatrix}
 	\begin{bmatrix}
 		\beta_1 \\
@@ -88,39 +88,12 @@ eli matriisimuodossa
 		\sum\limits_{i=1}^n y_2 \\
 		\vdots \\
 		\sum\limits_{i=1}^n y_{m} \\
-	\end{bmatrix}
-\end{equation*}
-
-%Tämä voidaan edelleen kirjoittaa~\cite{wolframmath}
-
-%Merkitään nyt
-%\begin{equation*}
-%	\matr{Y} =
-%		\begin{bmatrix}
-%			y_1 \\
-%			y_2 \\
-%			\vdots \\
-%			y_n
-%		\end{bmatrix},\qquad
-%	\matr{X} = 
-%		\begin{bmatrix}
-%			x_{1}^0 & x_{1}^2 & ...    & x_{1}^n \\
-%			x_{2}^0 & x_{2}^2 & ...    & x_{2}^n \\
-%			\vdots  & \vdots  & \ddots & \vdots  \\
-%			x_{m}^0 & x_{m}^2 &    ... & x_{m}^n
-%		\end{bmatrix} \quad \text{ja} \quad
-%	\matr{\beta} =
-%		\begin{bmatrix}
-%			\beta_1 \\
-%			\beta_2 \\
-%			\vdots \\
-%			\beta_m			
-%		\end{bmatrix},
-%\end{equation*}
+	\end{bmatrix}.
+\end{equation}
 
 Voidaan myös huomata, että yhtälöön \ref{matriisimuoto} voidaan päästä hyödyntämällä Vandermonden matriisia \cite{vandermonde}
 \begin{equation}
-	\matr{V} = 
+	\matr{X} = 
 	\begin{bmatrix}
 		1 & x_{1}^2 & ...    & x_{1}^n \\
 		1 & x_{2}^2 & ...    & x_{2}^n \\
@@ -131,10 +104,11 @@ Voidaan myös huomata, että yhtälöön \ref{matriisimuoto} voidaan päästä h
 ja kirjoittamalla tämän avulla
 \begin{equation} \label{matriiseilla}
 	\begin{bmatrix}
-		1 & x_{1}^2 & ...    & x_{1}^n \\
-		1 & x_{2}^2 & ...    & x_{2}^n \\
-		\vdots  & \vdots  & \ddots & \vdots  \\
-		1 & x_{m}^2 &    ... & x_{m}^n
+			1 & x_{1} & x_{1}^2 & ...    & x_{1}^n \\
+			1  & x_{2}& x_{2}^2 & ...    & x_{2}^n \\
+			1  & x_{3}& x_{3}^2 & ...    & x_{3}^n \\
+			\vdots  & \vdots  & \vdots & \ddots & \vdots  \\
+			1  & x_{n}& x_{m}^2 &    ... & x_{m}^n
 	\end{bmatrix}
 	\begin{bmatrix}
 		\beta_1 \\
@@ -150,19 +124,21 @@ ja kirjoittamalla tämän avulla
 		y_n
 	\end{bmatrix}.
 \end{equation}
-Nyt voidaan kertoa edellinen yhtälö puolittain vasemmalta Vandermonden matriisin transpoosilla $\transpose{\matr{V}}$, jolloin yhtälö saadaan seuraavaan muotoon:
-\begin{equation} 
+Nyt voidaan kertoa edellinen yhtälö puolittain vasemmalta Vandermonden matriisin transpoosilla $\transpose{\matr{X}}$, jolloin yhtälö saadaan seuraavaan muotoon:
+\begin{equation*} 
 	\begin{bmatrix}
-		1       & 1       & ...    & 1 \\
-		x_{1}^2 & x_{2}^2 & ...    &  x_{m}^2\\
-		\vdots  & \vdots  & \ddots & \vdots  \\
-		x_{1}^n & x_{2}^n &    ... & x_{m}^n
+		1       & 1       & 1 & ...    & 1 \\
+		x_{1} & x_{2} &  x_3 &...    &  x_{m}\\
+		x_{1}^2 & x_{2}^2 & x_3^3 & ...    &  x_{m}^2\\
+		\vdots  & \vdots  & \vdots & \ddots & \vdots  \\
+		x_{1}^n & x_{2}^n & x_3^n &   ... & x_{m}^n
 	\end{bmatrix}
 	\begin{bmatrix}
-		1 & x_{1}^2 & ...    & x_{1}^n \\
-		1 & x_{2}^2 & ...    & x_{2}^n \\
-		\vdots  & \vdots  & \ddots & \vdots  \\
-		1 & x_{m}^2 &    ... & x_{m}^n
+			1 & x_{1} & x_{1}^2 & ...    & x_{1}^n \\
+			1  & x_{2}& x_{2}^2 & ...    & x_{2}^n \\
+			1  & x_{3}& x_{3}^2 & ...    & x_{3}^n \\
+			\vdots  & \vdots  & \vdots & \ddots & \vdots  \\
+			1  & x_{n}& x_{m}^2 &    ... & x_{m}^n
 	\end{bmatrix}
 	\begin{bmatrix}
 		\beta_1 \\
@@ -182,17 +158,108 @@ Nyt voidaan kertoa edellinen yhtälö puolittain vasemmalta Vandermonden matriis
 		y_2 \\
 		\vdots \\
 		y_n
+	\end{bmatrix}.
+\end{equation*}
+Suoritetaan yhtälön matriisien kertolaskut, jolloin saadaan
+\begin{equation}\label{vandermondesta}
+	\begin{bmatrix}
+		n & \sum\limits_{i=1}^{n} x_i & ... & \sum\limits_{i=1}^{n} x_i^{m} \\
+		\sum\limits_{i=1}^{n} x_i & \sum\limits_{i=1}^{n} x_i^2 & ... & \sum\limits_{i=1}^{n} x_i^{m+1} \\
+		\vdots & \vdots & \ddots  & \vdots \\
+		\sum\limits_{i=1}^{n} x_i^{m} & \sum\limits_{i=1}^{n} x_i^{m+1} & ... & \sum\limits_{i=1}^{n} x_i^{2m}
 	\end{bmatrix}
+	\begin{bmatrix}
+		\beta_1 \\
+		\beta_2 \\
+		\vdots \\
+		\beta_{m+1} \\
+	\end{bmatrix}
+	=
+	\begin{bmatrix}
+		\sum\limits_{i=1}^n y_1 \\
+		\sum\limits_{i=1}^n y_2 \\
+		\vdots \\
+		\sum\limits_{i=1}^n y_{m} \\
+	\end{bmatrix}.
+\end{equation}
+Nyt voidaan huomata yhtälöiden \ref{vandermondesta} ja \ref{matriisimuoto} olevan identtiset. Koska Vandermonden matriisi on kääntyvä\footnote{Mikä voidaan helposti osoittaa, ks. esim \url{https://proofwiki.org/wiki/Inverse_of_Vandermonde's_Matrix}}, on kaikille yhtälöstä \ref{matriiseilla} yhtälöön \ref{vandermondesta} pääsemiseksi tehdyille operaatioille käänteisoperaatio. Täten yhtälöt \ref{matriiseilla} ja \ref{matriisimuoto} ovat yhtäpitävät, eli pienimmän neliösumman antavat kertoimet $\beta_i$ voidaan ratkaista yhtälöstä \ref{matriiseilla}.
+
+Otetaan kerroinvektorin ratkaisemisen helpottamiseksi käyttöön seuraavat merkinnät:
+\begin{equation*}
+	\matr{Y} =
+		\begin{bmatrix}
+			y_1 \\
+			y_2 \\
+			\vdots \\
+			y_n
+		\end{bmatrix} \quad \text{ja} \quad
+	\matr{\beta} =
+		\begin{bmatrix}
+			\beta_1 \\
+			\beta_2 \\
+			\vdots \\
+			\beta_m			
+		\end{bmatrix},
+\end{equation*}
+jolloin yhtälö \ref{matriisimuoto} voidaan kirjoittaa lyhyesti
+\begin{equation}
+	\matr{Y} = \matr{X}\matr{\beta}
+\end{equation}
+ja tästä ratkaista $\matr{\beta}$ seuraavasti:
+\begin{alignat}{2}
+	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
+	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
+	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
+\end{alignat}
+
+Samankaltaisella päättelyketjulla voidaan ratkaista yleinen lauseke myös tilanteelle, jossa kaikkien pisteiden mittaustarkkuus ei ole sama, jolloin pisteille halutaan käyttää erilaisia painokertoimia sovitusta tehtäessä. Tähän voidaan käyttää varianssimatriisia $\matr{V}$, jonka avulla voidaan määritellä painokerroinmatriisi $\matr{W}=\matr{V}^{-1}\sigma^2$. Tässä $\sigma$ on tutkittavan aineiston varianssi ja $\matr{V}$ määritelty seuraavasti:~\cite{basicideas}
+\begin{equation*}
+	\matr{V}
+	=
+	\begin{bmatrix}
+		\sigma_1^2   & \sigma_{1,2} &   ...  & \sigma_{1,n} \\
+		\sigma_{2,1} & \sigma_2^2   &   ...  & \sigma_{2,n} \\
+		\vdots       & \vdots       & \ddots & \vdots \\
+		\sigma_{n,1}  & \sigma_{n,2}  &   ...  & \sigma_n^2
+	\end{bmatrix}
+\end{equation*}
+
+Näitä merkintöjä käyttäen kerroinvektori $\matr{\beta}$ voidaan ratkaista yhtälöstä \ref{virheella}~\cite{basicideas}.
+\begin{equation}\label{virheella}
+	\matr{\beta} = (\transpose{\matr{X}}\matr{W}\matr{X})^{-1}\transpose{\matr{X}}\matr{W}\matr{Y}
 \end{equation}
 
-%jolloin yhtälö \ref{matriiseilla} saadaan seuraavaan muotoon, josta voidaan helposti ratkaista $\matr{\beta}$.~\cite{wolframmath}
-%\begin{alignat}{2}
-%	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
-%	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
-%	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
-%\end{alignat}
-
-
+\section{Pienimmän neliösumman ratkaisu kaksiulotteiselle havaintoaineistolle}
+Kun pienimmän neliösumman sovitusta sovelletaan asteroidin radanmääritykseen, on käytössä kaksiulotteinen havaintoaineisto, joka koostuu asteroidin paikoista $(x_i, y_i)$ ajanhetkillä $t_i$. Asteroidin paikkavektori $\matr{r}(t)$ mielivaltaisella ajanhetkellä $t$ voidaan ratkaista asteroidin rataelementtien avulla. Rataelementeiksi voidaan valita asteroidin paikka $\matr{R}_0 = (X_0, Y_0)$ ja nopeus $\matr{V}_0 = (\dot{X}_0, \dot{Y}_0)$ ajanhetkellä $t = 0$, jolloin asteroidin paikka saadaan seuraavasti:
+\begin{equation}
+	\matr{r}(t) = \matr{R}_0 + \matr{V}_0t.
+\end{equation}	
+	
+Havaintoaineiston ollessa kaksiulotteinen, täytyy $\matr{Y}$-vektorin tallentaa sekä havaitut $x$- että $y$-koordinaatit, jolloin
+\begin{equation*}
+	\matr{Y}
+	=
+	\begin{bmatrix}
+		x_1 \\
+		y_2 \\
+		x_2 \\
+		y_2 \\
+		\vdots \\
+		x_n \\
+		y_n
+	\end{bmatrix}.
+\end{equation*}
+Koska tahdotaan ratkaista aiemmin määritellyt rataelementit, on myös ratkaistava kerroinvektori erilainen:
+\begin{equation*}
+	\matr{\beta}
+	=
+	\begin{bmatrix}
+		X_0 \\
+		Y_0 \\
+		\dot{X}_0 \\
+		\dot{Y}_0 \\
+	\end{bmatrix}.
+\end{equation*}
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
 \newpage
