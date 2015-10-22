@@ -28,6 +28,7 @@
 \usepackage{bm}
 \newcommand{\matr}[1]{\bm{#1}}
 \newcommand{\transpose}[1]{{#1}^T}
+\newcommand{\var}{\text{var}}
 
 %%%%% kaikki ennen tätä liittyy käytettäviin paketteihin tai dokumentin muotoiluun. siihen ei tarvinne aluksi koskea. %%%%%
 
@@ -206,10 +207,10 @@ jolloin yhtälö \ref{matriisimuoto} voidaan kirjoittaa lyhyesti
 	\matr{Y} = \matr{X}\matr{\beta}
 \end{equation}
 ja tästä ratkaista $\matr{\beta}$ seuraavasti:
-\begin{alignat}{2}
+\begin{alignat}{2} \label{ilmanvirhetta}
 	\matr{Y} &= \matr{X}\matr{\beta} &&|| \transpose{\matr{X}} \cdot \nonumber \\
 	\transpose{\matr{X}}\matr{Y} &= \transpose{\matr{X}}\matr{X}\matr{\beta} &&|| (\transpose{\matr{X}}\matr{X}\matr{\beta})^{-1} \nonumber \\
-	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\matr{X}\matr{Y} \quad &&
+	\matr{\beta} &= (\transpose{\matr{X}}\matr{X})^{-1}\transpose{\matr{X}}\matr{Y} \quad &&
 \end{alignat}
 
 Samankaltaisella päättelyketjulla voidaan ratkaista yleinen lauseke myös tilanteelle, jossa kaikkien pisteiden mittaustarkkuus ei ole sama, jolloin pisteille halutaan käyttää erilaisia painokertoimia sovitusta tehtäessä. Tähän voidaan käyttää varianssimatriisia $\matr{V}$, jonka avulla voidaan määritellä painokerroinmatriisi $\matr{W}=\matr{V}^{-1}\sigma^2$. Tässä $\sigma$ on tutkittavan aineiston varianssi ja $\matr{V}$ määritelty seuraavasti:~\cite{basicideas}
@@ -235,7 +236,7 @@ Kun pienimmän neliösumman sovitusta sovelletaan asteroidin radanmääritykseen
 	\matr{r}(t) = \matr{R}_0 + \matr{V}_0t.
 \end{equation}	
 	
-Havaintoaineiston ollessa kaksiulotteinen, täytyy $\matr{Y}$-vektorin tallentaa sekä havaitut $x$- että $y$-koordinaatit, jolloin
+Havaintoaineiston ollessa kaksiulotteinen, täytyy $\matr{Y}$-vektorin tallentaa sekä $x$- että $y$-koordinaatit, jolloin
 \begin{equation*}
 	\matr{Y}
 	=
@@ -260,6 +261,40 @@ Koska tahdotaan ratkaista aiemmin määritellyt rataelementit, on myös ratkaist
 		\dot{Y}_0 \\
 	\end{bmatrix}.
 \end{equation*}
+Myös havainnot sisältävän matriisin $\matr{X}$ täytyy mukautua kaksiulotteiseen havaintoaineistoon, jotta kertolasku $\matr{Y}$-vektorin kanssa on mahdollinen ja fysikaalisesti mielekäs. Tähän sopii alla esitetty matriisi, jolla $(\transpose{\matr{X}}\matr{X})^{-1}\transpose{\matr{X}}$ tuottaa
+kooltaan $4 \times 2n$ matriisin, joka voidaan edelleen kertoa edellä määritellyllä vektorilla $\matr{Y}$, jolloin saadaan kooltaan matriisia $\matr{\beta}$ vastaava matriisi. Ajanhetki $t_i$ on pisteen $(x_i, y_i)$ havaintoaika.
+\begin{equation*}
+	\matr{X}
+	=
+	\begin{bmatrix}
+		1 & 0 & t_1 & 0 \\
+		0 & 1 & 0 & t_1 \\
+		\vdots & \vdots & \vdots & \vdots \\
+		1 & 0 & t_n & 0 \\
+		0 & 1 & 0 & t_n
+	\end{bmatrix} 
+\end{equation*}
+
+Näillä uudelleenmääritellyillä on mahdollista käyttää suoraan aiemmin ratkaistuja yhtälöitä \ref{ilmanvirhetta} (kaikkien havaintojen painokerroin sama) tai \ref{virheella} (painokertoimet). Mikäli käytetään painokertoimia, on myös painokerroinmatriisin koko luonnollisesti $2n~\times~2n$. Ratkaisuna saatavasta vektorista $\matr{\beta}$ saadaan suoraan rataelementit $\matr{R_0}$ ja $\matr{V_0}$.
+
+Virhearvio %TODO
+
+\section{Ennusteen virhearvio lineaarisessa mallissa} \label{linvirhe}
+Yhtälön \ref{virheella} mukaisesti ratkaistujen parametrien $\matr{\beta}$ virhe voidaan laskea kun tiedetään, että lineaarikombinaatiossa $\transpose{\matr{P}}\matr{Y}$, missä $\matr{P}$ on vakiovektori, saadaan varianssimatriisi seuraavasti \cite{basicideas}:
+\begin{equation*}
+	\text{var}(\transpose{\matr{P}}\matr{Y}) = \transpose{\matr{P}}\text{var}(\matr{Y})\matr{P}.
+\end{equation*}
+Tällöin saadaan
+\begin{equation} \label{varianssihirvio}
+	\var(\matr{\beta}) =  (\transpose{\matr{X}}\matr{W}\matr{X})^{-1}\transpose{\matr{X}}\matr{W}\var(\matr{\beta}) \matr{W}(\transpose{\matr{X}}\matr{W}\matr{X})^{-1}.
+\end{equation}
+Hyödyntämällä aiemmin määriteltyä $\matr{W}=\matr{V}^{-1}\sigma^2$ ja tietoa $\var(\matr{\beta})=\matr{V}$ eli $\var(\beta)~=~\sigma^2\matr{W}^{-1}$ saadaan yhtälö \ref{varianssihirvio} muotoon
+\begin{equation}
+	\var(\matr{\beta}) = \sigma^2(\transpose{\matr{X}}\matr{W}\matr{X})^{-1}	
+\end{equation}
+
+Kun parametrien $\beta_i$ varianssit $\sigma_i$ tunnetaan, saadaan niistä helposti keskihajonnat $s$, kun tiedetään, että $\sigma=s^2$ \cite{maol}.
+
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
 \newpage
