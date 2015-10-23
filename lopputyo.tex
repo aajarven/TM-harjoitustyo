@@ -9,7 +9,7 @@
 \usepackage{fancyhdr}
 \usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
 \usepackage{float}
-\usepackage[section]{placeins}
+
 %\usepackage[numbered,autolinebreaks,useliterate]{mcode} % jos tahdot laittaa matlabkoodia näkyville niin kannattaa käyttää tätä
 
 % hyödyllisiä paketteja:
@@ -40,6 +40,12 @@ Anni Järvenpää
 \date{\today}
 \begin{document}
 \maketitle
+
+\newpage
+\null
+\thispagestyle{empty}
+\addtocounter{page}{-1}
+\newpage
 
 %%%%%%%%%%%%%%% Oleellinen sisältö alkaa%%%%%%%%%%%%%%%
 \section{Lineaarinen pienimmän neliösumman menetelmä}
@@ -230,9 +236,9 @@ Näitä merkintöjä käyttäen kerroinvektori $\matr{\beta}$ voidaan ratkaista 
 	\matr{\beta} = (\transpose{\matr{X}}\matr{W}\matr{X})^{-1}\transpose{\matr{X}}\matr{W}\matr{Y}
 \end{equation}
 
-\section{Pienimmän neliösumman ratkaisu kaksiulotteiselle havaintoaineistolle}
+\section{Pienimmän neliösumman ratkaisu kaksiulotteiselle havaintoaineistolle} \label{2d}
 Kun pienimmän neliösumman sovitusta sovelletaan asteroidin radanmääritykseen, on käytössä kaksiulotteinen havaintoaineisto, joka koostuu asteroidin paikoista $(x_i, y_i)$ ajanhetkillä $t_i$. Asteroidin paikkavektori $\matr{r}(t)$ mielivaltaisella ajanhetkellä $t$ voidaan ratkaista asteroidin rataelementtien avulla. Rataelementeiksi voidaan valita asteroidin paikka $\matr{R}_0 = (X_0, Y_0)$ ja nopeus $\matr{V}_0 = (\dot{X}_0, \dot{Y}_0)$ ajanhetkellä $t = 0$, jolloin asteroidin paikka saadaan seuraavasti:
-\begin{equation}
+\begin{equation} \label{r(t)}
 	\matr{r}(t) = \matr{R}_0 + \matr{V}_0t.
 \end{equation}	
 	
@@ -277,8 +283,6 @@ kooltaan $4 \times 2n$ matriisin, joka voidaan edelleen kertoa edellä määrite
 
 Näillä uudelleenmääritellyillä on mahdollista käyttää suoraan aiemmin ratkaistuja yhtälöitä \ref{ilmanvirhetta} (kaikkien havaintojen painokerroin sama) tai \ref{virheella} (painokertoimet). Mikäli käytetään painokertoimia, on myös painokerroinmatriisin koko luonnollisesti $2n~\times~2n$. Ratkaisuna saatavasta vektorista $\matr{\beta}$ saadaan suoraan rataelementit $\matr{R_0}$ ja $\matr{V_0}$.
 
-Virhearvio %TODO
-
 \section{Ennusteen virhearvio lineaarisessa mallissa} \label{linvirhe}
 Yhtälön \ref{virheella} mukaisesti ratkaistujen parametrien $\matr{\beta}$ virhe voidaan laskea kun tiedetään, että lineaarikombinaatiossa $\transpose{\matr{P}}\matr{Y}$, missä $\matr{P}$ on vakiovektori, saadaan varianssimatriisi seuraavasti \cite{basicideas}:
 \begin{equation*}
@@ -293,7 +297,29 @@ Hyödyntämällä aiemmin määriteltyä $\matr{W}=\matr{V}^{-1}\sigma^2$ ja tie
 	\var(\matr{\beta}) = \sigma^2(\transpose{\matr{X}}\matr{W}\matr{X})^{-1}	
 \end{equation}
 
-Kun parametrien $\beta_i$ varianssit $\sigma_i$ tunnetaan, saadaan niistä helposti keskihajonnat $s$, kun tiedetään, että $\sigma=s^2$ \cite{maol}.
+Kun parametrien $\beta_i$ varianssit $\sigma_i$ tunnetaan, saadaan niistä helposti keskihajonnat $s$ (yhtälö \ref{keskihajonta}) tai keskiarvon keskivirheet $s_{\bar{x}}$ (yhtälö \ref{keskiarvonkeskivirhe}) \cite{maol}.
+\begin{equation} \label{keskihajonta}
+	\sigma=s^2
+\end{equation}
+\begin{equation} \label{keskiarvonkeskivirhe}
+	s_{\bar{x}} = \frac{s}{\sqrt{n}}
+\end{equation}
+Kun yksittäisten parametrien virheet tiedetään, voidaan niiden perusteella laskettavan funktion $f$ virhe käyttäen virheen kasautumislakia \cite{error}
+\begin{equation}
+	\delta f = \sqrt{\sum\limits_{i=1}^n\left(\frac{\partial f}{\partial\beta_i}\delta\beta_i\right)^2},
+\end{equation}
+missä virheenä käytetään tyypillisesti keskiarvon keskivirhettä.
+
+Virheen kasautumislakia käyttäen saadaan luvun \ref{2d} yhtälössä \ref{r(t)} esitetylle asteroidin paikalle ajan funktiona virhe seuraavasti:
+\begin{align}
+	\delta r(t) &= \sqrt{\left(\frac{\partial r}{\partial{X_0}} \delta X_0 \right)^2 + \left(\frac{\partial r}{\partial{Y_0}} \delta Y_0 \right)^2 + \left(\frac{\partial r}{\partial\dot{X_0}} \delta \dot X_0 \right)^2 + \left(\frac{\partial r}{\partial\dot{Y_0}} \delta \dot Y_0 \right)^2 } \nonumber\\
+	 &= \sqrt{ \delta{X_0}^2 + \delta{Y_0}^2 + \left(\delta\dot{X_0}t\right)^2 + \left(\delta\dot{Y_0}t\right)^2}
+\end{align}
+ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
+\begin{align}
+	\delta v(t) &= \sqrt{\left(\frac{\partial v}{\partial\dot{X_0}} \delta \dot X_0 \right)^2 + \left(\frac{\partial v}{\partial\dot{Y_0}} \delta \dot Y_0 \right)^2 } \nonumber\\
+	 &= \sqrt{ \delta\dot{X_0}^2 + \delta\dot{Y_0}^2}
+\end{align}
 
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
