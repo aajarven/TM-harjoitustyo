@@ -18,7 +18,7 @@ for i in range(0,len(xHavainto)):
     for j in range(1, aste+1):
         X[i][j] = xHavainto[i]**j
 
-beta = np.dot(np.dot(np.dot(np.linalg.inv(np.dot(np.dot(np.transpose(X), W), X)), np.transpose(X)), W), Y)
+beta = np.dot( np.dot( np.dot( np.linalg.inv( np.dot( np.dot( np.transpose(X), W), X)), np.transpose(X)), W), Y)
 print "kerroinmatriisi beta:"
 print beta
 
