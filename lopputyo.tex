@@ -385,6 +385,55 @@ ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 \section{Python-implementaatio}
 Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Matriisiksi $\matr{X}$ voi antaa joko yksisarakkeisen vektorin, jolloin sen oletetaan olevan yhtälön \ref{vandermonde} toinen sarake, tai kokonaisen matriisin, jolloin sitä käytetään sellaisenaan. Tämä mahdollistaa ohjelman käytön myös kaksiulotteiselle havaintoaineistolle. Matriisia $\matr{Y}$ käytetään aina sellaisenaan.
 
+Ohjelman testaamiseksi generoin funktiolla $y=1.5x^3-5x^2+3x+1.5$ sata datapistettä väliltä $[-1, 4]$, yhden setin keskihajonnalla 3 ja toisen keskihajonnalla 0.5. Sen jälkeen sovitin kumpaankin datasettiin kolmannen asteen käyrän käyttäen painokerroinmatriisina yksikkömatriisia, sillä kaikkien pisteiden "mittaustarkkuus" on sama. Pisteet ja niihin sovitetut käyrät ovat nähtävillä kuvissa \ref{keskihajonta3} ja \ref{keskihajonta05}. Keskihajonnalla 3 saatiin kerroinmatriisi
+\begin{equation*}
+	\matr{\beta_{3}}
+	=
+	\begin{bmatrix}
+		0.78875931 \\
+ 		3.45233752 \\
+ 		-5.28074743 \\
+		1.5722111
+	\end{bmatrix}
+\end{equation*}
+ja keskihajonnalla 0,5
+\begin{equation*}
+	\matr{\beta_{0.5}}
+	=
+	\begin{bmatrix}
+		1,48549344 \\
+ 		3,13099507 \\
+ 		-5,10374017 \\
+  		1,51945966
+  	\end{bmatrix}.
+\end{equation*}
+Näistä jälkimmäinen on selvästi lähempänä dataa generoitaessa käytettyä matriisia
+\begin{equation*}
+	\matr{\beta_{\text{tod}}}
+	=
+	\begin{bmatrix}
+		0.5 \\
+ 		3 \\
+ 		-5 \\
+  		1.5
+  	\end{bmatrix}.
+\end{equation*}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{python/keskihajonta3.png}
+\caption{Keskihajonnalla 3 generoidut pisteet ja niihin sovitettu käyrä}
+\label{keskihajonta3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{python/keskihajonta05.png}
+\caption{Keskihajonnalla 0.5 generoidut pisteet ja niihin sovitettu käyrä}
+\label{keskihajonta05}
+\end{figure}
+
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
 \newpage
