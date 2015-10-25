@@ -30,6 +30,67 @@
 \newcommand{\transpose}[1]{{#1}^T}
 \newcommand{\var}{\text{var}}
 
+% pythonjutut
+\usepackage{color}
+\usepackage{listings}
+\usepackage{setspace}
+
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+
+\lstset{
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1
+}
+\lstdefinestyle{python}{
+numbers=left,
+numberstyle=\footnotesize,
+numbersep=1em,
+xleftmargin=1em,
+framextopmargin=2em,
+framexbottommargin=2em,
+showspaces=false,
+showtabs=false,
+showstringspaces=false,
+frame=l,
+tabsize=4,
+% Basic
+basicstyle=\ttfamily\small\setstretch{1},
+backgroundcolor=\color{Background},
+language=Python,
+% Comments
+commentstyle=\color{Comments}\slshape,
+% Strings
+stringstyle=\color{Strings},
+morecomment=[s][\color{Strings}]{"""}{"""},
+morecomment=[s][\color{Strings}]{'''}{'''},
+% keywords
+morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,
+or,print,break,continue,return,True,False,None,access,as,,del,except,exec,
+finally,global,import,lambda,pass,print,raise,try,assert},
+keywordstyle={\color{Keywords}\bfseries},
+% additional keywords
+morekeywords={[2]@invariant},
+keywordstyle={[2]\color{Decorators}\slshape},
+emph={self},
+emphstyle={\color{self}\slshape},
+breaklines=true,
+breakatwhitespace=true
+postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+}
+
 %%%%% kaikki ennen tätä liittyy käytettäviin paketteihin tai dokumentin muotoiluun. siihen ei tarvinne aluksi koskea. %%%%%
 
 %%%%% kansilehti %%%%%
@@ -48,7 +109,7 @@ Anni Järvenpää
 \newpage
 
 %%%%%%%%%%%%%%% Oleellinen sisältö alkaa%%%%%%%%%%%%%%%
-\section{Lineaarinen pienimmän neliösumman menetelmä}
+\section{Lineaarinen pienimmän neliösumman menetelmä} \ref{tavallinenMenetelma}
 Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa $n$ muotoa $(x_i, y_i)$ olevasta pisteestä koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. Tyypillisesti sovituksen hyvyyttä mitataan pisteiden vertikaalisena etäi\-syytenä~$|e|$ sovitetusta suorasta (merkitty sinisellä kuvassa \ref{vertikaalietaisyys}). Pienimmän neliösumman menetelmässä näiden vertikaalisten poikkeamien neliöiden summa pyritään minimoimaan, siis etsimään funktion $f(x) = \beta_1 + \beta_2 x + \beta_3 x^2 + ... + \beta_{m+1} x^m$ kertoimet $\beta_1 ... \beta_{m+1}$ siten, että virhe $S$ on mahdollisimman pieni, kun $S$ on määritelty yhtälön \ref{virhe} mukaisesti.~\cite{basicideas}
 \begin{equation} \label{virhe}
 	S = \sum\limits_{i=1}^{n} e_i^2 = \sum\limits_{i=1}^{n} (y_i - f(x_i))^2
@@ -99,7 +160,7 @@ eli matriisimuodossa
 \end{equation}
 
 Voidaan myös huomata, että yhtälöön \ref{matriisimuoto} voidaan päästä hyödyntämällä Vandermonden matriisia \cite{vandermonde}
-\begin{equation}
+\begin{equation} \label{vandermonde}
 	\matr{X} = 
 	\begin{bmatrix}
 		1 & x_{1} & x_{1}^2 & ...    & x_{1}^n \\
@@ -321,6 +382,9 @@ ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 	 &= \sqrt{ \delta\dot{X_0}^2 + \delta\dot{Y_0}^2}
 \end{align}
 
+\section{Python-implementaatio}
+Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Matriisiksi $\matr{X}$ voi antaa joko yksisarakkeisen vektorin, jolloin sen oletetaan olevan yhtälön \ref{vandermonde} toinen sarake, tai kokonaisen matriisin, jolloin sitä käytetään sellaisenaan. Tämä mahdollistaa ohjelman käytön myös kaksiulotteiselle havaintoaineistolle. Matriisia $\matr{Y}$ käytetään aina sellaisenaan.
+
 
 %%%%% Sisältö loppuu, lähdeluettelo %%%%%
 \newpage
@@ -328,6 +392,10 @@ ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 \bibliography{lahteet} 
 \appendix
 \newpage
-\section{Liittyvä liite.} \label{koodi}
-Liian laaja leipätekstiin.
+\section{Käytetty ohjelma} \label{koodi}
+\subsection{pns.py} \label{pns}
+\lstinputlisting[style=python]{python/pns.py}
+\newpage
+\subsection{utils.py} \label{utils}
+\lstinputlisting[style=python]{python/utils.py}
 \end{document}
