@@ -12,3 +12,5 @@
 *.swp
 *.pyc
 python/*.txt
+murri*
+.fuse_hidden*
