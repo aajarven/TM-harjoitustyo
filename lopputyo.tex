@@ -382,8 +382,10 @@ ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 	 &= \sqrt{ \left(\delta\dot{X_0}\right)^2 + \left(\delta\dot{Y_0}\right)^2}
 \end{align}
 
-\section{Python-implementaatio}
-Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Matriisiksi $\matr{X}$ voi antaa joko yksisarakkeisen vektorin, jolloin sen oletetaan olevan yhtälön \ref{vandermonde} toinen sarake, tai kokonaisen matriisin, jolloin sitä käytetään sellaisenaan. Tämä mahdollistaa ohjelman käytön myös kaksiulotteiselle havaintoaineistolle. Matriisia $\matr{Y}$ käytetään aina sellaisenaan.
+\section{Python-toteutus}
+Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Argumentit annetaan järjestyksessä \texttt{aste X Y W}, siis esim \texttt{python pns.py 3 X.txt Y.txt W.txt}.
+
+Matriisiksi $\matr{X}$ voi antaa joko yksisarakkeisen vektorin, jolloin sen oletetaan olevan yhtälön \ref{vandermonde} toinen sarake, tai kokonaisen matriisin, jolloin sitä käytetään sellaisenaan. Tämä mahdollistaa ohjelman käytön myös kaksiulotteiselle havaintoaineistolle. Matriisia $\matr{Y}$ käytetään aina sellaisenaan.
 
 Ohjelman testaamiseksi generoin funktiolla $y=1.5x^3-5x^2+3x+1.5$ sata datapistettä väliltä $[-1, 4]$, yhden setin keskihajonnalla 3 ja toisen keskihajonnalla 0.5. Sen jälkeen sovitin kumpaankin datasettiin kolmannen asteen käyrän käyttäen painokerroinmatriisina yksikkömatriisia, sillä kaikkien pisteiden "mittaustarkkuus" on sama. Pisteet ja niihin sovitetut käyrät ovat nähtävillä kuvissa \ref{keskihajonta3} ja \ref{keskihajonta05}. Keskihajonnalla 3 saatiin kerroinmatriisi
 \begin{equation*}
