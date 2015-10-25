@@ -8,17 +8,19 @@ if len(sys.argv) !=5 :
     print ("Anna komentoriviargumentteina sovitettavan käyrän aste sekä tiedostot, joissa käytettävät matriisit X, Y ja W ovat")
     sys.exit(1)
 
-X = lueMatriisi(sys.argv[2])
+aste = int(sys.argv[1])
+xHavainto = lueMatriisi(sys.argv[2])
 Y = lueMatriisi(sys.argv[3])
 W = lueMatriisi(sys.argv[4])
 
-#beta = np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(X), X)),np.transpose(X)),Y)
-beta = np.dot(np.dot(np.dot(np.linalg.inv(np.dot(np.dot(np.transpose(X), W), X)), np.transpose(X)), W), Y)
-#print beta
-#print beta[0][0]
+X = np.ones((len(xHavainto), aste+1))
+for i in range(0,len(xHavainto)):
+    for j in range(1, aste+1):
+        X[i][j] = xHavainto[i]**j
 
-b = beta.item(0,0)
-k = beta.item(1,0)
+beta = np.dot(np.dot(np.dot(np.linalg.inv(np.dot(np.dot(np.transpose(X), W), X)), np.transpose(X)), W), Y)
+print "kerroinmatriisi beta:"
+print beta
 
 xmin = np.amin(X[:,1])
 xmax = np.amax(X[:,1])
@@ -27,7 +29,6 @@ ymax = np.amax(Y)
 pad = 0.2
 
 plt.scatter(X[:,1], Y)
-#plt.plot([xmin-pad, xmax+pad], [b+(ymin-pad)*k, b+(ymax+pad)*k] )
 plottaaFunktio(xmin-pad, xmax+pad, beta)
 axes = plt.gca()
 axes.set_xlim([np.amin(X[:,1])-pad, np.amax(X[:,1])+pad])
