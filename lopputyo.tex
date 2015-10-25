@@ -109,7 +109,7 @@ Anni Järvenpää
 \newpage
 
 %%%%%%%%%%%%%%% Oleellinen sisältö alkaa%%%%%%%%%%%%%%%
-\section{Lineaarinen pienimmän neliösumman menetelmä} \ref{tavallinenMenetelma}
+\section{Lineaarinen pienimmän neliösumman menetelmä} \label{tavallinenMenetelma}
 Lineaarisen pienimmän neliösumman menetelmän tavoitteena on sovittaa $n$ muotoa $(x_i, y_i)$ olevasta pisteestä koostuvaan havaintoaineistoon suora, joka edustaa pisteitä mahdollisimman hyvin. Tyypillisesti sovituksen hyvyyttä mitataan pisteiden vertikaalisena etäi\-syytenä~$|e|$ sovitetusta suorasta (merkitty sinisellä kuvassa \ref{vertikaalietaisyys}). Pienimmän neliösumman menetelmässä näiden vertikaalisten poikkeamien neliöiden summa pyritään minimoimaan, siis etsimään funktion $f(x) = \beta_1 + \beta_2 x + \beta_3 x^2 + ... + \beta_{m+1} x^m$ kertoimet $\beta_1 ... \beta_{m+1}$ siten, että virhe $S$ on mahdollisimman pieni, kun $S$ on määritelty yhtälön \ref{virhe} mukaisesti.~\cite{basicideas}
 \begin{equation} \label{virhe}
 	S = \sum\limits_{i=1}^{n} e_i^2 = \sum\limits_{i=1}^{n} (y_i - f(x_i))^2
