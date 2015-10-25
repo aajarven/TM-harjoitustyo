@@ -383,7 +383,20 @@ ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 \end{align}
 
 \section{Python-toteutus}
-Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Argumentit annetaan järjestyksessä \texttt{aste X Y W}, siis esim \texttt{python pns.py 3 X.txt Y.txt W.txt}.
+Toteutin lisäksi Pythonilla ohjelman, joka sovittaa aiemmin esitettyä menetelmää käyttäen $n$. asteen polynomin annettuihin datapisteisiin. Liitteessä \ref{koodi} esitelty ohjelma ottaa komentoriviargumentteina sovitettavan käyrän asteen sekä tiedostot, joista se lukee sovituksessa käytettävät matriisit $\matr{X}$, $\matr{Y}$ ja $\matr{W}$. Argumentit annetaan järjestyksessä \texttt{aste X Y W}, siis esim \texttt{python pns.py 3 X.txt Y.txt W.txt}. Matriisin alkiot annetaan pilkuilla ja rivinvaihdoilla eroteltuna, siis esimerkiksi tiedoston sisältö\\
+\begin{center}
+	\texttt{1,2,3\\
+		4,5,6\\
+		7,8,9}\\
+\end{center}
+vastaa matriisia
+\begin{equation*}
+	\begin{bmatrix}
+		1 & 2 & 3 \\
+		4 & 5 & 6 \\
+		7 & 8 & 9
+	\end{bmatrix}.
+\end{equation*}
 
 Matriisiksi $\matr{X}$ voi antaa joko yksisarakkeisen vektorin, jolloin sen oletetaan olevan yhtälön \ref{vandermonde} toinen sarake, tai kokonaisen matriisin, jolloin sitä käytetään sellaisenaan. Tämä mahdollistaa ohjelman käytön myös kaksiulotteiselle havaintoaineistolle. Matriisia $\matr{Y}$ käytetään aina sellaisenaan.
 
