@@ -374,12 +374,12 @@ missä virheenä käytetään tyypillisesti keskiarvon keskivirhettä.
 Virheen kasautumislakia käyttäen saadaan luvun \ref{2d} yhtälössä \ref{r(t)} esitetylle asteroidin paikalle ajan funktiona virhe seuraavasti:
 \begin{align}
 	\delta r(t) &= \sqrt{\left(\frac{\partial r}{\partial{X_0}} \delta X_0 \right)^2 + \left(\frac{\partial r}{\partial{Y_0}} \delta Y_0 \right)^2 + \left(\frac{\partial r}{\partial\dot{X_0}} \delta \dot X_0 \right)^2 + \left(\frac{\partial r}{\partial\dot{Y_0}} \delta \dot Y_0 \right)^2 } \nonumber\\
-	 &= \sqrt{ \delta{X_0}^2 + \delta{Y_0}^2 + \left(\delta\dot{X_0}t\right)^2 + \left(\delta\dot{Y_0}t\right)^2}
+	 &= \sqrt{ \left(\delta{X_0}\right)^2 + \left(\delta{Y_0}\right)^2 + \left(\delta\dot{X_0}t\right)^2 + \left(\delta\dot{Y_0}t\right)^2}
 \end{align}
 ja vastaavasti koska $v(t) = \frac{dr}{dt} = (\dot X_0, \dot Y_0)$, saadaan
 \begin{align}
 	\delta v(t) &= \sqrt{\left(\frac{\partial v}{\partial\dot{X_0}} \delta \dot X_0 \right)^2 + \left(\frac{\partial v}{\partial\dot{Y_0}} \delta \dot Y_0 \right)^2 } \nonumber\\
-	 &= \sqrt{ \delta\dot{X_0}^2 + \delta\dot{Y_0}^2}
+	 &= \sqrt{ \left(\delta\dot{X_0}\right)^2 + \left(\delta\dot{Y_0}\right)^2}
 \end{align}
 
 \section{Python-implementaatio}
