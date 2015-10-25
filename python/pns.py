@@ -26,13 +26,14 @@ xmin = np.amin(X[:,1])
 xmax = np.amax(X[:,1])
 ymin = np.amin(Y)
 ymax = np.amax(Y)
-pad = 0.2
+padY = 1
+padX = .4
 
-plt.scatter(X[:,1], Y)
-plottaaFunktio(xmin-pad, xmax+pad, beta)
+plt.scatter(xHavainto, Y)
+plottaaFunktio(xmin-padX, xmax+padX, beta)
 axes = plt.gca()
-axes.set_xlim([np.amin(X[:,1])-pad, np.amax(X[:,1])+pad])
-axes.set_ylim([np.amin(Y)-pad, np.amax(Y)+pad])
+axes.set_xlim([np.amin(X[:,1])-padX, np.amax(X[:,1])+padX])
+axes.set_ylim([np.amin(Y)-padY, np.amax(Y)+padY])
 plt.show()
 
 
