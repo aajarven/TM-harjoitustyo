@@ -28,19 +28,3 @@ if len(X) != len(Y) or len(Y) != len(W):
 beta = np.dot( np.dot( np.dot( np.linalg.inv( np.dot( np.dot( np.transpose(X), W), X)), np.transpose(X)), W), Y)
 print "kerroinmatriisi beta:"
 print beta
-
-xmin = np.amin(X[:,1])
-xmax = np.amax(X[:,1])
-ymin = np.amin(Y)
-ymax = np.amax(Y)
-padY = 1
-padX = .4
-
-plt.scatter(xHavainto, Y)
-plottaaFunktio(xmin-padX, xmax+padX, beta)
-axes = plt.gca()
-axes.set_xlim([np.amin(X[:,1])-padX, np.amax(X[:,1])+padX])
-axes.set_ylim([np.amin(Y)-padY, np.amax(Y)+padY])
-plt.show()
-
-
